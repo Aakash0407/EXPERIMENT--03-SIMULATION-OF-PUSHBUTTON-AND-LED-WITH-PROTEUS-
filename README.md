@@ -73,28 +73,35 @@ We are now at the last part of step by step guide on how to simulate STM32 proje
 ## STM 32 CUBE PROGRAM :
 ````
 #include "main.h"
+
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+
 int main(void)
 {
-  HAL_Init();
-  SystemClock_Config();
-  MX_GPIO_Init();
-  while (1)
+
+HAL_Init();
+SystemClock_Config();
+MX_GPIO_Init();
+
+while (1)
   {
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
 	  HAL_Delay(500);
 	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 	  HAL_Delay(500);
   }
- }
+  
+}
 
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
+  
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -103,7 +110,8 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+  
+   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
@@ -115,11 +123,15 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 }
+
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+  
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+  
   GPIO_InitStruct.Pin = GPIO_PIN_5;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -127,27 +139,31 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
+
 void Error_Handler(void)
 {
-  __disable_irq();
+   __disable_irq();
   while (1)
   {
   }
+  }
+
 }
 
 #ifdef  USE_FULL_ASSERT
+
 void assert_failed(uint8_t *file, uint32_t line)
 {
+
 }
 #endif
 ````
 ## Output screen shots of proteus  :
-### When Switch is in OFF state:
+### When Switch is in ON state:
+![exp3 1](https://user-images.githubusercontent.com/118799103/234253253-c5c3d5e0-78fb-42da-928e-996db69f02f3.png)
 
- 
- 
- 
- 
+### When Switch is in OFF state:
+ ![exp3 2](https://user-images.githubusercontent.com/118799103/234253279-88c52536-b5d0-49d0-bffa-6fbe8a32a0b0.png) 
 ## Result :
 Interfacing a digital output and digital input  with ARM microcontroller are simulated in proteus and the results are verified.
 
